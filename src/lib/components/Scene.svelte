@@ -1,7 +1,8 @@
 <script>
   import { T, useFrame } from '@threlte/core'
-  import { OrbitControls, GLTF, useGltfAnimations, ContactShadows } from '@threlte/extras'
+  import { OrbitControls, GLTF, useGltfAnimations } from '@threlte/extras'
   import { Group } from 'three'
+	import Ground from './Ground.svelte';
 
   const { gltf, actions } = useGltfAnimations()
 
@@ -27,14 +28,7 @@
 />
 <T.AmbientLight intensity={0.5} />
 
-<ContactShadows
-  opacity={1}
-  scale={10}
-  blur={1}
-  far={10}
-  resolution={256}
-  color="#000000"
-/>
+<Ground/>
 
 <GLTF
   bind:gltf={$gltf}
