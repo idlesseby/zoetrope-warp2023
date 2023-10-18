@@ -1,84 +1,56 @@
 <script>
   import { T, useFrame } from '@threlte/core'
-  import { OrbitControls, GLTF, useGltfAnimations } from '@threlte/extras'
+  import { OrbitControls, GLTF, interactivity } from '@threlte/extras'
   import { Group } from 'three'
+  import { gsap } from "gsap";
 	import Ground from './Ground.svelte';
 
-  const { gltf, actions } = useGltfAnimations()
-
-  $: $actions.run?.play()
+  interactivity()
 
   const ref = new Group()
+  let speed = {
+    value: 0
+  }
 
-  useFrame(() => {
-    ref.rotation.y += 0.7892
+  function start() {
+    gsap.to(speed, {value: Math.PI / 4, duration: 8, ease: "power2.in"})
+  }
+
+  useFrame((state) => {
+    //const time = state.clock.getElapsedTime()
+    ref.rotation.y -= speed.value
   })
 </script>
 
 <T.PerspectiveCamera
   makeDefault
-  position={[-10, 0, 0]}
+  position={[-25, 5, 0]}
   fov={15}
 >
   <OrbitControls/>
 </T.PerspectiveCamera>
 
 <T.DirectionalLight
-  intensity={0.8}
+  intensity={1.2}
 />
-<T.AmbientLight intensity={0.5} />
 
 <Ground/>
-
-<GLTF
-  bind:gltf={$gltf}
-  url="https://threejs.org/examples/models/gltf/Xbot.glb"
-/>
 
 <T
   is={ref}
 >
-  <!-- <T.Mesh scale={2} rotation.x={-Math.PI / 2}>
-    <T.PlaneGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh> -->
+  <GLTF
+    url={'./model/Zoetrope.glb'}
+    scale={1}
+    useDraco
+  />
 
-  <T.Mesh scale={0.1} position={[0.75, 0.2, 0]} >
-    <T.SphereGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh>
-
-  <T.Mesh scale={0.11} position={[0.5625, 0.2, 0.5625]} >
-    <T.SphereGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh>
-
-  <T.Mesh scale={0.12} position={[0, 0.2, 0.75]}>
-    <T.SphereGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh>
-
-  <T.Mesh scale={0.13} position={[-0.5625, 0.2, 0.5625]} >
-    <T.SphereGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh>
-
-  <T.Mesh scale={0.14} position={[-0.75, 0.2, 0]}>
-    <T.SphereGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh>
-
-  <T.Mesh scale={0.13} position={[-0.5625, 0.2, -0.5625]} >
-    <T.SphereGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh>
-
-  <T.Mesh scale={0.12} position={[0, 0.2, -0.75]}>
-    <T.SphereGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh>
-
-  <T.Mesh scale={0.11} position={[0.5625, 0.2, -0.5625]} >
+  <T.Mesh 
+    scale={0.1} 
+    on:click={() => {
+      start()
+    }}
+  >
     <T.SphereGeometry/>
     <T.MeshStandardMaterial color="red"/>
   </T.Mesh>
