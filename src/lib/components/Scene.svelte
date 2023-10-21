@@ -1,40 +1,58 @@
 <script>
   import { T, useFrame } from '@threlte/core'
-  import { OrbitControls, GLTF, interactivity } from '@threlte/extras'
+  import { OrbitControls, GLTF, interactivity, Environment, useCursor } from '@threlte/extras'
   import { Group } from 'three'
   import { gsap } from "gsap";
-	import Ground from './Ground.svelte';
 
-  interactivity()
+  const { onPointerEnter, onPointerLeave } = useCursor()
 
   const ref = new Group()
+  let toggle = false
   let speed = {
     value: 0
   }
 
-  function start() {
-    gsap.to(speed, {value: Math.PI / 4, duration: 8, ease: "power2.in"})
+  function toggleRotation() {
+    if(toggle) {
+      gsap.to(speed, {value: Math.PI / 6, duration: 6, ease: "power2.in"})
+    }
+    if(!toggle) {
+      gsap.to(speed, {value: 0, duration: 4, ease: "power2.in"})
+    }
   }
 
-  useFrame((state) => {
-    //const time = state.clock.getElapsedTime()
+  interactivity()
+
+  useFrame(() => {
     ref.rotation.y -= speed.value
   })
 </script>
 
+<!-- 3D-Models:
+  Fall Tree V1 by Danni Bittman [CC-BY] via Poly Pizza - https://poly.pizza/m/0rx_H4qbwBp
+  Husky by Quaternius via Poly Pizza - https://poly.pizza/m/wcWiuEqwzq
+  Ghost Skull by Quaternius via Poly Pizza - https://poly.pizza/m/TX8r9WBXpe
+  basic stone 3 by felix stief [CC-BY] via Poly Pizza - https://poly.pizza/m/3a0ubCurnwU
+  Halloween Pumpkin by Neil Realubit [CC-BY] via Poly Pizza - https://poly.pizza/m/2Z1UzUc0No4
+-->
+
 <T.PerspectiveCamera
   makeDefault
-  position={[-25, 5, 0]}
+  position={[15, 3, 0]}
   fov={15}
 >
-  <OrbitControls/>
+  <OrbitControls
+    enablePan={false}
+    minDistance={8}
+    maxDistance={20}
+    maxPolarAngle={1.5}
+  />
 </T.PerspectiveCamera>
 
-<T.DirectionalLight
-  intensity={1.2}
+<Environment
+  path="/env/"
+  files="autumn_meadow_1k.hdr" 
 />
-
-<Ground/>
 
 <T
   is={ref}
@@ -43,15 +61,19 @@
     url={'./model/Zoetrope.glb'}
     scale={1}
     useDraco
+    position={[0, -0.5, 0]}
   />
-
-  <T.Mesh 
-    scale={0.1} 
-    on:click={() => {
-      start()
-    }}
-  >
-    <T.SphereGeometry/>
-    <T.MeshStandardMaterial color="red"/>
-  </T.Mesh>
 </T>
+
+<GLTF
+  url={'./model/Fall Tree V1.glb'}
+  scale={0.6}
+  useDraco
+  position={[0, 0.75, 0]}
+  on:pointerenter={onPointerEnter}
+  on:pointerleave={onPointerLeave}
+  on:click={() => {
+    toggle = !toggle
+    toggleRotation()
+  }}
+/>
