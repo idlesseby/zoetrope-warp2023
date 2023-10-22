@@ -12,20 +12,20 @@
     value: 0
   }
 
-  function toggleRotation() {
+  const toggleRotation = () => {
     if(toggle) {
-      gsap.to(speed, {value: Math.PI / 6, duration: 6, ease: "power2.in"})
+      gsap.to(speed, {value: Math.PI / 6, duration: 5, ease: "power2.in"})
     }
     if(!toggle) {
-      gsap.to(speed, {value: 0, duration: 4, ease: "power2.in"})
+      gsap.to(speed, {value: 0, duration: 4, ease: "circ.out"})
     }
   }
-
-  interactivity()
 
   useFrame(() => {
     ref.rotation.y -= speed.value
   })
+
+  interactivity()
 </script>
 
 <!-- 3D-Models:
@@ -44,14 +44,14 @@
   <OrbitControls
     enablePan={false}
     minDistance={8}
-    maxDistance={20}
+    maxDistance={25}
     maxPolarAngle={1.5}
   />
 </T.PerspectiveCamera>
 
 <Environment
-  path="/env/"
-  files="autumn_meadow_1k.hdr" 
+  path="/envmap/"
+  files={'autumn_meadow_1k.hdr'} 
 />
 
 <T

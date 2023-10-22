@@ -20,7 +20,7 @@
       new EffectPass(
         camera,
         new BloomEffect({
-          intensity: 0.25,
+          intensity: 0.35,
           luminanceThreshold: 0.15,
           height: 512,
           width: 512,
