@@ -1,6 +1,13 @@
 <div class="overlay">
-  <div class="instruction">click tree to toggle rotate</div>
-  <div class="signature">A digital Zoetrope made by idlesseby</div>
+  <div class="instruction">
+    <div class="instruction-header">Instructions:</div>
+    <ul class="instruction-points">
+      <li>drag mouse horizontally to spin the zoetrope</li>
+      <li>drag strong enough to make the illusion appear</li>
+    </ul>
+  </div>
+  <div class="exclamation">Awesome!</div>
+  <div class="signature">A digital Zoetrope made by Sebastian Mödritzer</div>
 </div>
 
 <style>
@@ -16,28 +23,59 @@
 
   .instruction {
     position: absolute;
-    top: 16px;
+    bottom: 12px;
     left: 16px;
-    font-size: 14px;
+  }
+
+  .instruction-header {
+    font-weight: 500;
+    font-size: 16px;
+  }
+
+  .instruction-points {
     font-weight: 100;
+    margin-top: 4px;
+    font-size: 14px;
+    padding-left: 24px;
+  }
+
+  .exclamation {
+    position: absolute;
+    font-size: 36px;
+    width: 100%;
+    text-align: center;
+    bottom: 160px;
   }
 
   .signature {
     position: absolute;
-    bottom: 16px;
+    top: 16px;
     right: 16px;
     font-size: 14px;
   }
 
   @media (min-width: 480px) {
     .instruction {
-      top: 24px;
+      bottom: 12px;
       left: 24px;
+    }
+
+    .instruction-header {
       font-size: 18px;
     }
 
+    .instruction-points {
+      margin-top: 8px;
+      font-size: 18px;
+      padding-left: 30px;
+    }
+
+    .exclamation {
+      font-size: 60px;
+    }
+
     .signature {
-      bottom: 24px;
+      top: 24px;
       right: 24px;
       font-size: 18px;
     }

@@ -1,28 +1,53 @@
 <script>
   import { T, useFrame } from '@threlte/core'
-  import { OrbitControls, GLTF, interactivity, Environment, useCursor } from '@threlte/extras'
+  import { OrbitControls, GLTF, interactivity, Environment } from '@threlte/extras'
   import { Group } from 'three'
   import { gsap } from "gsap";
 
-  const { onPointerEnter, onPointerLeave } = useCursor()
-
   const ref = new Group()
-  let toggle = false
-  let speed = {
-    value: 0
+
+  $: innerWidth = 0
+	$: innerHeight = 0
+
+  let mouseStartPos = 0
+  let mouseCurrPos = 0
+  let dragStrength = 0
+  let rotationSpeed = 0
+  let isDragActive = false
+
+  const startDrag = (event) => {
+    isDragActive = true
+    mouseStartPos = event.clientX - innerWidth / 2
   }
 
-  const toggleRotation = () => {
-    if(toggle) {
-      gsap.to(speed, {value: Math.PI / 6, duration: 5, ease: "power2.in"})
-    }
-    if(!toggle) {
-      gsap.to(speed, {value: 0, duration: 4, ease: "circ.out"})
-    }
+  const getMouseCurrPos = (event) => {
+    mouseCurrPos = event.clientX - innerWidth / 2
+  }
+
+  const stopDrag = () => {
+    isDragActive = false
   }
 
   useFrame(() => {
-    ref.rotation.y -= speed.value
+    if(isDragActive) {
+      dragStrength = (mouseCurrPos - mouseStartPos) / 10000
+    }
+
+    if(Math.abs(dragStrength) > 0.2) {
+      dragStrength = Math.PI / 6
+    }
+
+    if(dragStrength > 0) {
+      dragStrength -= 0.0005
+    }
+
+    if(dragStrength < 0) {
+      dragStrength += 0.0005
+    }
+
+    rotationSpeed += (dragStrength - rotationSpeed) * 0.2
+
+    ref.rotation.y += rotationSpeed
   })
 
   interactivity()
@@ -36,13 +61,16 @@
   Halloween Pumpkin by Neil Realubit [CC-BY] via Poly Pizza - https://poly.pizza/m/2Z1UzUc0No4
 -->
 
+<svelte:window on:mousedown={startDrag} on:mousemove={getMouseCurrPos} on:mouseup={stopDrag} bind:innerWidth bind:innerHeight/>
+
 <T.PerspectiveCamera
   makeDefault
-  position={[15, 3, 0]}
+  position={[15, 1, 0]}
   fov={15}
 >
   <OrbitControls
     enablePan={false}
+    enableRotate={false}
     minDistance={8}
     maxDistance={25}
     maxPolarAngle={1.5}
@@ -70,10 +98,4 @@
   scale={0.6}
   useDraco
   position={[0, 0.75, 0]}
-  on:pointerenter={onPointerEnter}
-  on:pointerleave={onPointerLeave}
-  on:click={() => {
-    toggle = !toggle
-    toggleRotation()
-  }}
 />
