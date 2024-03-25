@@ -1,3 +1,38 @@
+<script>
+  import { dragStrength } from "../stores"
+
+  let exclamationDiv
+  let exclamationText = ""
+  let isVisible = false
+
+  const updateExclamation = () => {
+    if($dragStrength < 0.01) {
+      exclamationText = ""
+      isVisible = false
+    }
+
+    if($dragStrength > 0.01 && $dragStrength < 0.15) {
+      exclamationText = "Spin harder!"
+      isVisible = true
+    }
+
+    if($dragStrength > 0.15 && $dragStrength < 0.2) {
+      exclamationText = "Almost!"
+      isVisible = true
+    }
+
+    if($dragStrength >= 0.2) {
+      exclamationText = "Awesome!"
+      isVisible = true
+    }
+  }
+
+</script>
+
+<svelte:window 
+  on:mouseup={updateExclamation}
+/>
+
 <div class="overlay">
   <div class="instruction">
     <div class="instruction-header">Instructions:</div>
@@ -6,7 +41,13 @@
       <li>drag strong enough to make the illusion appear</li>
     </ul>
   </div>
-  <div class="exclamation">Awesome!</div>
+  <div 
+    bind:this={exclamationDiv} 
+    style="transition: all 0.3s; opacity: {isVisible ? 1 : 0}; transform: scale({isVisible ? 1 : 0.25}); translateY({isVisible ? '-100%' : '0%'})"
+    class="exclamation"
+  >
+    <p>{exclamationText}</p>
+  </div>
   <div class="signature">A digital Zoetrope made by Sebastian Mödritzer</div>
 </div>
 
