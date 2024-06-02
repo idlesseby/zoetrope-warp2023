@@ -68,7 +68,10 @@
 
 <svelte:window 
   on:mousedown={startDrag} 
+  on:dragstart={startDrag}
   on:mousemove={getMouseCurrPos} 
+  on:dragover={getMouseCurrPos}
+  on:dragend={stopDrag}
   on:mouseup={stopDrag} 
   bind:innerWidth 
   bind:innerHeight
