@@ -49,6 +49,9 @@
     <p>{exclamationText}</p>
   </div>
   <div class="signature">A digital Zoetrope made by Sebastian Mödritzer</div>
+  <div class="mobile-warning">
+    <p>Mobile version under construction</p>
+  </div>
 </div>
 
 <style>
@@ -60,12 +63,16 @@
     left: 0;
     pointer-events: none;
     user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .instruction {
     position: absolute;
     bottom: 12px;
     left: 16px;
+    display: none;
   }
 
   .instruction-header {
@@ -86,6 +93,7 @@
     width: 100%;
     text-align: center;
     bottom: 160px;
+    display: none;
   }
 
   .signature {
@@ -93,12 +101,20 @@
     top: 16px;
     right: 16px;
     font-size: 14px;
+    display: none;
+  }
+
+  .mobile-warning {
+    display: block;
+    font-size: 28px;
+    text-align: center;
   }
 
   @media (min-width: 480px) {
     .instruction {
       bottom: 12px;
       left: 24px;
+      display: block;
     }
 
     .instruction-header {
@@ -113,12 +129,18 @@
 
     .exclamation {
       font-size: 66px;
+      display: block;
     }
 
     .signature {
       top: 24px;
       right: 24px;
       font-size: 18px;
+      display: block;
+    }
+
+    .mobile-warning {
+      display: none;
     }
   }
 </style>
