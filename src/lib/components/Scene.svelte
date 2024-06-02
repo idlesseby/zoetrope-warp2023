@@ -24,11 +24,11 @@
 
   const startDrag = (event) => {
     isDragActive = true
-    mouseStartPos = event.clientX - innerWidth / 2
+    mouseStartPos = event.clientX / window.innerWidth
   }
 
   const getMouseCurrPos = (event) => {
-    mouseCurrPos = event.clientX - innerWidth / 2
+    mouseCurrPos = event.clientX / window.innerWidth
   }
 
   const stopDrag = () => {
@@ -47,10 +47,12 @@
 
   useFrame(() => {
     if(isDragActive) {
-      $dragStrength = (mouseCurrPos - mouseStartPos) / 10000
+      $dragStrength = (mouseCurrPos - mouseStartPos) / 5
     }
 
-    if(Math.abs($dragStrength) > 0.2) {
+    console.log((mouseCurrPos - mouseStartPos) / 5)
+
+    if(Math.abs($dragStrength) > 0.175) {
       $dragStrength = Math.PI / 6
     }
 

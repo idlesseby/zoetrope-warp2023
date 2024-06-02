@@ -6,22 +6,22 @@
   let isVisible = false
 
   const updateExclamation = () => {
-    if($dragStrength < 0.01) {
+    if(Math.abs($dragStrength) < 0.1) {
       exclamationText = ""
       isVisible = false
     }
 
-    if($dragStrength > 0.01 && $dragStrength < 0.15) {
+    if(Math.abs($dragStrength) > 0.1 && Math.abs($dragStrength) < 0.125) {
       exclamationText = "Spin harder!"
       isVisible = true
     }
 
-    if($dragStrength > 0.15 && $dragStrength < 0.2) {
+    if(Math.abs($dragStrength) > 0.125 && Math.abs($dragStrength) < 0.175) {
       exclamationText = "Almost!"
       isVisible = true
     }
 
-    if($dragStrength >= 0.2) {
+    if(Math.abs($dragStrength) >= 0.175) {
       exclamationText = "Awesome!"
       isVisible = true
     }
@@ -37,8 +37,8 @@
   <div class="instruction">
     <div class="instruction-header">Instructions:</div>
     <ul class="instruction-points">
-      <li>drag mouse horizontally to spin the zoetrope</li>
-      <li>drag strong enough to make the illusion appear</li>
+      <li>Drag/swipe horizontally over screen to spin the zoetrope</li>
+      <li>Drag/swipe far enough to make the illusion appear</li>
     </ul>
   </div>
   <div 
@@ -112,7 +112,7 @@
     }
 
     .exclamation {
-      font-size: 60px;
+      font-size: 66px;
     }
 
     .signature {
