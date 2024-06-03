@@ -50,9 +50,7 @@
       $dragStrength = (mouseCurrPos - mouseStartPos) / 5
     }
 
-    console.log((mouseCurrPos - mouseStartPos) / 5)
-
-    if(Math.abs($dragStrength) > 0.175) {
+    if(Math.abs($dragStrength) > 0.15) {
       $dragStrength = Math.PI / 6
     }
 

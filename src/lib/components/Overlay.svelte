@@ -6,22 +6,22 @@
   let isVisible = false
 
   const updateExclamation = () => {
-    if(Math.abs($dragStrength) < 0.1) {
+    if(Math.abs($dragStrength) < 0.075) {
       exclamationText = ""
       isVisible = false
     }
 
-    if(Math.abs($dragStrength) > 0.1 && Math.abs($dragStrength) < 0.125) {
+    if(Math.abs($dragStrength) > 0.075 && Math.abs($dragStrength) < 0.125) {
       exclamationText = "Spin harder!"
       isVisible = true
     }
 
-    if(Math.abs($dragStrength) > 0.125 && Math.abs($dragStrength) < 0.175) {
+    if(Math.abs($dragStrength) > 0.125 && Math.abs($dragStrength) < 0.15) {
       exclamationText = "Almost!"
       isVisible = true
     }
 
-    if(Math.abs($dragStrength) >= 0.175) {
+    if(Math.abs($dragStrength) >= 0.15) {
       exclamationText = "Awesome!"
       isVisible = true
     }
